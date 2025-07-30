@@ -46,6 +46,17 @@ python main.py                           # Run interactive CLI mode
 ```bash
 --help                                   # Show help information
 --import <playlist_id>                   # Import a Spotify playlist by ID or share link
---print
+--print                                  # Print a list of songs in an imported playlist
+--vector                                 # Print the audio feature vectors for songs in the playlist
 --exit                                   # Exit the application
+```
+
+### Example Usage:
+```bash
+aoide> --import 37i9dQZF1DXcBWIGoYBM5M    # Import playlist by ID
+aoide> --import https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M  # Import by share link
+aoide> --print                           # Show track names
+aoide> --vector                          # Show audio analysis vectors
+aoide> --help                            # Get help
+aoide> --exit                            # Exit application
 ```
