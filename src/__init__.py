@@ -1,0 +1,3 @@
+"""
+Spectra application modules.
+"""
