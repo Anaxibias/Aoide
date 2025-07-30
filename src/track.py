@@ -3,7 +3,7 @@
 Track object for the Aoide Python application.
 """
 
-from src.constants import CAMELOT_TO_NUMERIC
+from src.constants import CAMELOT_TO_NUMERIC, MODE_TO_NUMERIC
 
 class Track:
     """Track class for managing Spotify track data and audio analysis."""
@@ -100,13 +100,12 @@ class Track:
             list: List of numerical audio features
         """
         # Convert Camelot code to numeric value
+        mode_numeric = MODE_TO_NUMERIC.get(self.mode, 0)
         camelot_numeric = CAMELOT_TO_NUMERIC.get(self.camelot, 0)
 
         return [
-            self.key,
-            self.mode,
+            mode_numeric,
             camelot_numeric,
-            self.loudness,
             self.tempo,
             self.energy,
             self.danceability,

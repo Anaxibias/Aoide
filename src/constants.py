@@ -12,5 +12,9 @@ CAMELOT_TO_NUMERIC = {
     "10A": 19, "10B": 20, "11A": 21, "11B": 22, "12A": 23, "12B": 24
 }
 
+MODE_TO_NUMERIC = {"major": 1, "minor": 0}
+
 # Reverse mapping for converting back from numeric to Camelot
 NUMERIC_TO_CAMELOT = {v: k for k, v in CAMELOT_TO_NUMERIC.items()}
+
+NUMERIC_TO_MODE = {v: k for k, v in MODE_TO_NUMERIC.items()}

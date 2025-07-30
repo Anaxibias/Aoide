@@ -29,6 +29,7 @@ class CLI:
             "--help": {"function": self.show_help, "description": "Show help information"},
             "--import": {"function": self.import_playlist, "description": "Import a Spotify playlist by ID"},
             "--print": {"function": self.print_playlist, "description": "Print a list of songs in an imported playlist"},
+            "--vector": {"function": self.display_vector, "description": "Print the vectors for the songs in the playlist"},
             "--exit": {"function": self.exit_app, "description": "Exit the application"}
         }
 
@@ -129,7 +130,7 @@ class CLI:
             
             track_count = len(self.current_playlist.playlist) if self.current_playlist.playlist else 0
             print(f"✅ Successfully imported playlist with {track_count} tracks!")
-            print(f"Playlist data loaded and ready for analysis.")
+            print("Playlist data loaded and ready for analysis.")
             
         except Exception as e:
             print(f"❌ Failed to import playlist: {e}")
@@ -152,6 +153,25 @@ class CLI:
         print("-" * 40)
         for index, track in enumerate(playlist, 1):
             print(f"{index:2d}. {track.get_name()}")
+        print()
+
+        return True
+    
+    def display_vector(self, args: List[str]) -> bool:
+
+        if not self.current_playlist:
+            print("❌ No playlist imported. Use --import <playlist_id> to import a playlist first.")
+            return True
+        
+        playlist = self.current_playlist.get_playlist()
+        if not playlist:
+            print("❌ No tracks found in the current playlist.")
+            return True
+        
+        print("\nTrack Vectors:")
+        print("-" * 40)
+        for index, track in enumerate(playlist, 1):
+            print(f"{index:2d}. {track.get_vector()}")
         print()
 
         return True
