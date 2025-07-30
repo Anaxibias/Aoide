@@ -45,14 +45,7 @@ python main.py                           # Run interactive CLI mode
 ### Available CLI Commands:
 ```bash
 --help                                   # Show help information
---import <playlist_id>                   # Import a Spotify playlist by ID
+--import <playlist_id>                   # Import a Spotify playlist by ID or share link
 --print
 --exit                                   # Exit the application
 ```
-
-### Example Usage:
-```bash
-# Import a playlist from Spotify
-python main.py --import 37i9dQZF1DXcBWIGoYBM5M
-```
-Aoide can also extract playlist ID directly from a link to the playlist.
