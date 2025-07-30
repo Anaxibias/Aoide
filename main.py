@@ -8,6 +8,7 @@ import requests
 from dotenv import load_dotenv
 from src.spotify_api_client import SpotifyAPIClient
 from src.trackanalysis_api_client import TrackAnalysisApiClient
+from src.cache import Cache
 from src.cli import CLI
 
 # Load environment variables from .env file
@@ -104,8 +105,9 @@ def main():
         print("⚠️  Credentials not configured")
 
     print("\nSetup complete. Ready for API integration.")
+    cache = Cache()
     spotify_api_client = SpotifyAPIClient(token)
-    trackanalysis_api_client = TrackAnalysisApiClient(AUDIOANALYSIS_KEY, AUDIOANALYSIS_HOST)
+    trackanalysis_api_client = TrackAnalysisApiClient(AUDIOANALYSIS_KEY, AUDIOANALYSIS_HOST, cache)
     cli = CLI(spotify_api_client, trackanalysis_api_client)
     cli.run()
     return 0

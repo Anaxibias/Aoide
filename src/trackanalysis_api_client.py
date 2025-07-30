@@ -6,23 +6,26 @@ Handles API requests and authentication for RapidAPI Track Analysis service.
 
 import time
 import requests
+from src.cache import Cache
 
 class TrackAnalysisApiClient:
     """API Client for making authenticated requests to RapidAPI Track Analysis service."""
 
-    def __init__(self, key: str, host: str):
+    def __init__(self, key: str, host: str, cache: Cache):
         """
         Initialize the Track Analysis API client with authentication credentials.
         
         Args:
             key (str): The RapidAPI key for authentication
             host (str): The RapidAPI host for the track analysis service
+            cache: Instance of Cache for persistent data storage
         """
         self.url = "https://track-analysis.p.rapidapi.com/pktx/spotify"
         self.headers = {
             "x-rapidapi-key": key,
             "x-rapidapi-host": host
         }
+        self.cache = cache
         self.last_request_time = 0  # Track last request time for rate limiting
 
     def get(self, track_ref: str):
@@ -47,7 +50,7 @@ class TrackAnalysisApiClient:
         try:
             while True:
                 response = requests.get(f"{self.url}/{track_ref}", headers=self.headers, timeout=30)
-
+                self.cache.update_request_count()
                 if response.status_code != 429:
                     break
                 else:

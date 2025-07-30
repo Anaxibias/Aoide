@@ -83,7 +83,6 @@ class Track:
         Returns:
             list: List of numerical audio features
         """
-        # Convert Camelot code to numeric value
 
         return [
             self.tempo,

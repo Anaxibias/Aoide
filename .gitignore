@@ -59,6 +59,11 @@ venv.bak/
 # Environment variables (IMPORTANT: Keep credentials secure)
 .env
 
+# Cache files (but keep the cache directory)
+cache/*.json
+cache/*.cache
+aoide_cache.json
+
 # IDE
 .vscode/
 .idea/

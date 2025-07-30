@@ -1,0 +1,2 @@
+# This file ensures the cache directory is included in the repository
+# The cache directory is required for the cache functionality to work properly
