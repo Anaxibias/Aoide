@@ -4,11 +4,10 @@ Figure superclass for the Aoide Python application.
 Provides base functionality for data visualization and plotting.
 """
 
-import plotly.graph_objects as go
-import plotly.express as px
 from typing import List, Dict, Any, Optional
 from abc import ABC, abstractmethod
-
+import plotly.graph_objects as go
+import plotly.express as px
 
 class Figure(ABC):
     """
@@ -18,7 +17,7 @@ class Figure(ABC):
     and defines the interface that subclasses must implement.
     """
 
-    def __init__(self, title: str = "Aoide Visualization", width: int = 800, height: int = 600):
+    def __init__(self, title: str = "Aoide Visualization", width: int = 800, height: int = 600, vectors: list = None):
         """
         Initialize the Figure with basic configuration.
         
@@ -26,12 +25,13 @@ class Figure(ABC):
             title (str): The title of the figure
             width (int): Width of the figure in pixels
             height (int): Height of the figure in pixels
+            vectors (list): List of vectors for the figure
         """
         self.title = title
         self.width = width
         self.height = height
         self.fig = None
-        self.data = []
+        self.data = vectors if vectors is not None else []
         
         # Default styling configuration
         self.theme = "plotly_dark"
