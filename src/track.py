@@ -3,8 +3,6 @@
 Track object for the Aoide Python application.
 """
 
-from src.constants import CAMELOT_TO_NUMERIC, MODE_TO_NUMERIC
-
 class Track:
     """Track class for managing Spotify track data and audio analysis."""
 
@@ -28,7 +26,7 @@ class Track:
         self.tempo = None
         self.energy = None
         self.danceability = None
-        self.happiness = None
+        self.valence = None
         self.acousticness = None
         self.liveness = None
         self.speechiness = None
@@ -41,17 +39,10 @@ class Track:
         if self.data:
             # Use .get() method with default values to handle missing keys
             self.name = self.data.get("name", "Unknown Track")
-            self.key = self.data.get("key", "")
-            self.mode = self.data.get("mode", "")
-            self.camelot = self.data.get("camelot", "")
-            self.loudness = self.data.get("loudness", "")
             self.tempo = self.data.get("tempo", None)
             self.energy = self.data.get("energy", None)
             self.danceability = self.data.get("danceability", None)
-            self.happiness = self.data.get("happiness", None)
-            self.acousticness = self.data.get("acousticness", None)
-            self.liveness = self.data.get("liveness", None)
-            self.speechiness = self.data.get("speechiness", None)
+            self.valence = self.data.get("happiness", None)
 
     def get_track(self):
         """
@@ -79,17 +70,10 @@ class Track:
             dict: Dictionary containing all audio analysis features
         """
         return {
-            "key": self.key,
-            "mode": self.mode,
-            "camelot": self.camelot,
-            "loudness": self.loudness,
             "tempo": self.tempo,
             "energy": self.energy,
             "danceability": self.danceability,
-            "happiness": self.happiness,
-            "acousticness": self.acousticness,
-            "liveness": self.liveness,
-            "speechiness": self.speechiness
+            "happiness": self.valence,
         }
 
     def get_vector(self):
@@ -100,17 +84,10 @@ class Track:
             list: List of numerical audio features
         """
         # Convert Camelot code to numeric value
-        mode_numeric = MODE_TO_NUMERIC.get(self.mode, 0)
-        camelot_numeric = CAMELOT_TO_NUMERIC.get(self.camelot, 0)
 
         return [
-            mode_numeric,
-            camelot_numeric,
             self.tempo,
             self.energy,
             self.danceability,
-            self.happiness,
-            self.acousticness,
-            self.liveness,
-            self.speechiness
+            self.valence,
         ]
