@@ -54,7 +54,7 @@ python main.py                           # Run interactive CLI mode
 ### Example Usage:
 ```bash
 aoide> --import 37i9dQZF1DXcBWIGoYBM5M    # Import playlist by ID
-aoide> --import https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M  # Import by share link
+aoide> --import https://open.spotify.com/track/1FRNBuJwMjofqnXkFhijQA?si=e38e344f392b4b23  # Import by share link
 aoide> --print                           # Show track names
 aoide> --vector                          # Show audio analysis vectors
 aoide> --help                            # Get help
