@@ -105,14 +105,18 @@ class CLI:
         return True
 
     def import_playlist(self, args: List[str]) -> bool:
-        """Import a Spotify playlist by ID."""
+        """Import a Spotify playlist."""
         if not args:
-            print("❌ Please provide a Spotify playlist ID.")
+            print("❌ Please provide a link to a Spotify playlist or a playlist ID .")
             print("Usage: --import <playlist_id>")
             print("Example: --import 37i9dQZF1DXcBWIGoYBM5M")
             return True
         
         playlist_id = args[0]
+        
+        if len(playlist_id) != 22:
+            if playlist_id[:34] == "https://open.spotify.com/playlist/":
+                playlist_id = playlist_id[34:57]
         
         if not self.spotify_api_client or not self.trackanalysis_api_client:
             print("❌ API clients not configured. Please check your setup.")
@@ -158,7 +162,19 @@ class CLI:
         return True
     
     def display_vector(self, args: List[str]) -> bool:
-
+        """
+        Display the audio feature vectors for all tracks in the current playlist.
+        
+        Shows a numbered list of tracks with their corresponding audio analysis vectors,
+        which contain numerical representations of audio features like tempo, energy,
+        danceability, and valence.
+        
+        Args:
+            args (List[str]): Command arguments (not used for this command)
+            
+        Returns:
+            bool: True to continue CLI execution, False to exit
+        """
         if not self.current_playlist:
             print("❌ No playlist imported. Use --import <playlist_id> to import a playlist first.")
             return True
