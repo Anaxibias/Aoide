@@ -23,11 +23,19 @@ class Playlist:
         self.data = None
         self.track_data = None
         self.playlist = None
+        self.vectors = []
+        self.song_list = []
 
         self.load_playlist()
         self.refs = self.get_track_refs()
-        self.track_data = self.playlist = self.get_track_data()
+        self.track_data = self.get_track_data()
         self.playlist = self.build_playlist()
+
+        for track in self.playlist:
+            self.vectors.append(track.get_vector())
+
+        for track in self.playlist:
+            self.song_list.append(track.get_name())
 
     def load_playlist(self):
         """Load playlist data from Spotify API."""
@@ -92,3 +100,9 @@ class Playlist:
     
     def get_playlist(self):
         return self.playlist
+    
+    def get_vectors(self):
+        return self.vectors
+    
+    def get_song_list(self):
+        return self.song_list

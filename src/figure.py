@@ -17,7 +17,7 @@ class Figure(ABC):
     and defines the interface that subclasses must implement.
     """
 
-    def __init__(self, title: str = "Aoide Visualization", width: int = 800, height: int = 600, vectors: list = None):
+    def __init__(self, title: str = "Aoide Visualization", width: int = 800, height: int = 600, vectors: list = None, names: list = None):
         """
         Initialize the Figure with basic configuration.
         
@@ -26,12 +26,14 @@ class Figure(ABC):
             width (int): Width of the figure in pixels
             height (int): Height of the figure in pixels
             vectors (list): List of vectors for the figure
+            names (list): List of song titles
         """
         self.title = title
         self.width = width
         self.height = height
         self.fig = None
         self.data = vectors if vectors is not None else []
+        self.names = names if names is not None else []
         
         # Default styling configuration
         self.theme = "plotly_dark"
@@ -40,12 +42,13 @@ class Figure(ABC):
         self.font_size = 12
 
     @abstractmethod
-    def create_figure(self, data: List[Any]) -> go.Figure:
+    def create_figure(self, data: List[Any], categories: List = None) -> go.Figure:
         """
         Abstract method to create the specific figure type.
         
         Args:
             data (List[Any]): The data to visualize
+            categories (List): Optional categories for the figure
             
         Returns:
             go.Figure: The created plotly figure

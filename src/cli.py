@@ -5,9 +5,8 @@ Provides command-line interface functionality.
 """
 
 import sys
+from typing import List
 from src.playlist import Playlist
-from src.track import Track
-from typing import Optional, List, Dict, Any
 
 class CLI:
     """Command-line interface class for command-based operations."""
@@ -24,7 +23,7 @@ class CLI:
         self.trackanalysis_api_client = trackanalysis_api_client
 
         self.current_playlist = None
-        
+    
         self.commands = {
             "--help": {"function": self.show_help, "description": "Show help information"},
             "--import": {"function": self.import_playlist, "description": "Import a Spotify playlist by ID"},
@@ -62,21 +61,21 @@ class CLI:
         print("Welcome to Aoide Audio Analysis Tool!")
         print("Type --help for available commands or --exit to quit.")
         print()
-        
+
         while True:
             try:
                 self.display_prompt()
                 user_input = input().strip()
-                
+
                 if not user_input:
                     continue
-                
+
                 command, args = self.parse_command(user_input)
-                
+
                 # Execute command and check if we should continue
                 if not self.execute_command(command, args):
                     break
-                    
+  
             except KeyboardInterrupt:
                 print("\n\n� Goodbye!")
                 break
@@ -91,17 +90,17 @@ class CLI:
         print()
         print("Available Commands:")
         print("-" * 20)
-        
+
         for command, info in self.commands.items():
             print(f"  {command:<12} - {info['description']}")
-        
+
         print()
         print("💡 Tips:")
         print("  • Commands are case-sensitive")
         print("  • Use --exit or Ctrl+C to quit")
         print("  • Additional commands will be added in future versions")
         print()
-        
+
         return True
 
     def import_playlist(self, args: List[str]) -> bool:
@@ -111,56 +110,56 @@ class CLI:
             print("Usage: --import <playlist_id>")
             print("Example: --import 37i9dQZF1DXcBWIGoYBM5M")
             return True
-        
+
         playlist_id = args[0]
-        
+
         if len(playlist_id) != 22:
             if playlist_id[:34] == "https://open.spotify.com/playlist/":
                 playlist_id = playlist_id[34:57]
-        
+
         if not self.spotify_api_client or not self.trackanalysis_api_client:
             print("❌ API clients not configured. Please check your setup.")
             return True
-        
+
         try:
             print(f"🔄 Importing playlist: {playlist_id}")            
-            
+
             # Create and load the playlist
             self.current_playlist = Playlist(
                 self.spotify_api_client,
                 self.trackanalysis_api_client,
                 playlist_id
             )
-            
+
             track_count = len(self.current_playlist.playlist) if self.current_playlist.playlist else 0
             print(f"✅ Successfully imported playlist with {track_count} tracks!")
             print("Playlist data loaded and ready for analysis.")
-            
+
         except Exception as e:
             print(f"❌ Failed to import playlist: {e}")
             self.current_playlist = None
-        
+
         return True
-    
+
     def print_playlist(self, args: List[str]) -> bool:
         """Print the tracks in the current playlist."""
         if not self.current_playlist:
             print("❌ No playlist imported. Use --import <playlist_id> to import a playlist first.")
             return True
-        
-        playlist = self.current_playlist.get_playlist()
-        if not playlist:
+
+        song_list = self.current_playlist.get_song_list()
+        if not song_list:
             print("❌ No tracks found in the current playlist.")
             return True
-            
-        print(f"\nPlaylist Tracks ({len(playlist)} tracks):")
+
+        print(f"\nPlaylist Tracks ({len(song_list)} tracks):")
         print("-" * 40)
-        for index, track in enumerate(playlist, 1):
-            print(f"{index:2d}. {track.get_name()}")
+        for index, song_name in enumerate(song_list, 1):
+            print(f"{index:2d}. {song_name}")
         print()
 
         return True
-    
+
     def display_vector(self, args: List[str]) -> bool:
         """
         Display the audio feature vectors for all tracks in the current playlist.
@@ -178,16 +177,16 @@ class CLI:
         if not self.current_playlist:
             print("❌ No playlist imported. Use --import <playlist_id> to import a playlist first.")
             return True
-        
-        playlist = self.current_playlist.get_playlist()
-        if not playlist:
+
+        vectors = self.current_playlist.get_vectors()
+        if not vectors:
             print("❌ No tracks found in the current playlist.")
             return True
-        
+
         print("\nTrack Vectors:")
         print("-" * 40)
-        for index, track in enumerate(playlist, 1):
-            print(f"{index:2d}. {track.get_vector()}")
+        for index, vector in enumerate(vectors, 1):
+            print(f"{index:2d}. {vector}")
         print()
 
         return True
@@ -196,7 +195,6 @@ class CLI:
         """Exit the application."""
         print("\nThank you for using Aoide!")
         return False
-
 
 def main():
     """Main function to run the CLI."""
