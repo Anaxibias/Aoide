@@ -7,11 +7,13 @@ Provides command-line interface functionality.
 import sys
 from typing import List
 from src.playlist import Playlist
+from src.radar_plot import RadarPlot
+from src.cache import Cache
 
 class CLI:
     """Command-line interface class for command-based operations."""
 
-    def __init__(self, spotify_api_client=None, trackanalysis_api_client=None):
+    def __init__(self, spotify_api_client=None, trackanalysis_api_client=None, cache=None):
         """
         Initialize the CLI with available commands and API clients.
         
@@ -21,14 +23,17 @@ class CLI:
         """
         self.spotify_api_client = spotify_api_client
         self.trackanalysis_api_client = trackanalysis_api_client
+        self.cache = cache
 
         self.current_playlist = None
     
         self.commands = {
             "--help": {"function": self.show_help, "description": "Show help information"},
             "--import": {"function": self.import_playlist, "description": "Import a Spotify playlist by ID"},
+            "--load": {"function": self.load_playlist, "description": "Load cached playlist from a previous session"},
             "--print": {"function": self.print_playlist, "description": "Print a list of songs in an imported playlist"},
             "--vector": {"function": self.display_vector, "description": "Print the vectors for the songs in the playlist"},
+            "--display": {"function": self.display_radar_plot, "description": "Create a radar plot visualization using track data from the imported playlist"},
             "--exit": {"function": self.exit_app, "description": "Exit the application"}
         }
 
@@ -128,8 +133,11 @@ class CLI:
             self.current_playlist = Playlist(
                 self.spotify_api_client,
                 self.trackanalysis_api_client,
-                playlist_id
+                playlist_id,
+                self.cache
             )
+
+
 
             track_count = len(self.current_playlist.playlist) if self.current_playlist.playlist else 0
             print(f"✅ Successfully imported playlist with {track_count} tracks!")
@@ -137,6 +145,35 @@ class CLI:
 
         except Exception as e:
             print(f"❌ Failed to import playlist: {e}")
+            self.current_playlist = None
+
+        return True
+
+    def load_playlist(self, args: List[str]) -> bool:
+        """Load cached playlist from a previous session."""
+        if not self.cache:
+            print("❌ Cache not configured. Please check your setup.")
+            return True
+
+        try:
+            print("🔄 Loading cached playlist...")
+            
+            # Create playlist from cache
+            cached_playlist = Playlist.from_cache(self.cache)
+            playlist_tracks = cached_playlist.get_playlist()
+            
+            # Check if there are any cached tracks
+            if len(playlist_tracks) == 0:
+                print("❌ No cached playlist found. Use --import <playlist_id> to import a playlist first.")
+                return True
+            
+            self.current_playlist = cached_playlist
+            track_count = len(playlist_tracks)
+            print(f"✅ Successfully loaded cached playlist with {track_count} tracks!")
+            print("Playlist data loaded and ready for analysis.")
+
+        except Exception as e:
+            print(f"❌ Failed to load cached playlist: {e}")
             self.current_playlist = None
 
         return True
@@ -188,6 +225,26 @@ class CLI:
         for index, vector in enumerate(vectors, 1):
             print(f"{index:2d}. {vector}")
         print()
+
+        return True
+
+    def display_radar_plot(self, args: List[str]) -> bool:
+        """Create a radar plot visualization using track data from the imported playlist."""
+        if not self.current_playlist:
+            print("❌ No playlist imported. Use --import <playlist_id> to import a playlist first.")
+            return True
+
+        vectors = self.current_playlist.get_vectors()
+        song_titles = self.current_playlist.get_song_list()
+
+        if not vectors or not song_titles:
+            print("❌ No tracks found in the current playlist.")
+            return True
+
+        # Create RadarPlot object using vectors and song_titles
+        radar_plot = RadarPlot(title="Playlist Audio Features", vectors=vectors, names=song_titles)
+        radar_plot.create_figure(['BPM', 'Energy', 'Danceability', 'Valence'])
+        radar_plot.show()
 
         return True
 

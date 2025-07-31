@@ -108,7 +108,7 @@ def main():
     cache = Cache()
     spotify_api_client = SpotifyAPIClient(token)
     trackanalysis_api_client = TrackAnalysisApiClient(AUDIOANALYSIS_KEY, AUDIOANALYSIS_HOST, cache)
-    cli = CLI(spotify_api_client, trackanalysis_api_client)
+    cli = CLI(spotify_api_client, trackanalysis_api_client, cache)
     cli.run()
     return 0
 

@@ -5,11 +5,12 @@ Playlist object for the Aoide Python application.
 from src.spotify_api_client import SpotifyAPIClient
 from src.trackanalysis_api_client import TrackAnalysisApiClient
 from src.track import Track
+from src.cache import Cache
 
 class Playlist:
     """Playlist class for managing Spotify playlists."""
     
-    def __init__(self, spotify_api_client: SpotifyAPIClient, trackanalysis_api_client: TrackAnalysisApiClient, playlist_id: str):
+    def __init__(self, spotify_api_client: SpotifyAPIClient, trackanalysis_api_client: TrackAnalysisApiClient, playlist_id: str, cache: Cache):
         """
         Initialize the Playlist with an API client and playlist ID.
         
@@ -20,6 +21,7 @@ class Playlist:
         self.spotify_api_client = spotify_api_client
         self.trackanalysis_api_client = trackanalysis_api_client
         self.playlist_id = playlist_id
+        self.cache = cache
         self.data = None
         self.track_data = None
         self.playlist = None
@@ -36,6 +38,46 @@ class Playlist:
 
         for track in self.playlist:
             self.song_list.append(track.get_name())
+
+    @classmethod
+    def from_cache(cls, cache):
+        """
+        Create a Playlist instance from cached track data.
+        
+        Args:
+            cache: Cache instance containing playlist data
+            
+        Returns:
+            Playlist: A new Playlist instance created from cached data
+        """
+        # Create a new instance without calling __init__
+        instance = cls.__new__(cls)
+        
+        # Initialize basic attributes
+        instance.spotify_api_client = None
+        instance.trackanalysis_api_client = None
+        instance.playlist_id = None
+        instance.cache = cache
+        instance.data = None
+        
+        # Load cached playlist data
+        cache_data = cache.get_cached_playlist()
+        instance.track_data = cache_data
+        instance.vectors = []
+        instance.song_list = []
+        
+        # Build playlist from cached data
+        instance.playlist = []
+        for data in cache_data:
+            if data is not None:
+                instance.playlist.append(Track(data))
+        
+        # Build vectors and song list
+        for track in instance.playlist:
+            instance.vectors.append(track.get_vector())
+            instance.song_list.append(track.get_name())
+        
+        return instance
 
     def load_playlist(self):
         """Load playlist data from Spotify API."""
@@ -96,6 +138,13 @@ class Playlist:
             if data is not None:
                 playlist_tracks.append(Track(data))
 
+        cache_data = []
+        for track in playlist_tracks:
+            data = track.get_data()
+            cache_data.append(data)
+
+        self.cache.update_playlist(cache_data)
+        
         return playlist_tracks
     
     def get_playlist(self):

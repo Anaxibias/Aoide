@@ -4,7 +4,7 @@ Radar plot implementation for the Aoide Python application.
 Subclass of Figure for creating radar/spider charts.
 """
 
-from typing import List, Any
+from typing import List
 import plotly.graph_objects as go
 from src.figure import Figure
 
@@ -28,7 +28,7 @@ class RadarPlot(Figure):
         """
         super().__init__(title, width, height, vectors, names)
 
-    def create_figure(self, data: List[Any], categories: List = None) -> go.Figure:
+    def create_figure(self, categories: List = None) -> None:
         """
         Create the radar plot figure.
         
@@ -41,5 +41,50 @@ class RadarPlot(Figure):
         """
         fig = go.Figure()
 
+        traces = self.get_traces(categories)
 
-        pass
+        for trace in traces:
+            fig.add_trace(trace)
+
+        self.set_layout(fig)
+
+        self.fig = fig
+
+    def set_layout(self, fig, **kwargs) -> None:
+        """
+        Configure the layout of the radar plot.
+        
+        Args:
+            **kwargs: Layout configuration options
+        """
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0, 130]  # Adjusted range for the data values
+                )
+            ),
+            showlegend=True,
+            title=self.title
+        )
+
+    def get_traces(self, categories: List = None) -> List[go.Scatterpolar]:
+        """
+        Get traces for the radar plot.
+        
+        Returns:
+            List: List of plotly traces for the radar plot
+        """
+        traces = []
+
+        for song_name, vector in zip(self.names, self.vectors):
+            trace = go.Scatterpolar(
+                r = vector,
+                theta = categories,
+                fill = 'toself',
+                name = song_name,
+            )
+
+            traces.append(trace)
+
+        return traces

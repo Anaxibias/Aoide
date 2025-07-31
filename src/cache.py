@@ -6,7 +6,7 @@ Provides persistent data storage between sessions.
 
 import json
 import os
-from typing import Any, Optional
+from typing import Any, List
 
 class Cache:
     """Simple file-based cache for storing data between sessions."""
@@ -22,6 +22,7 @@ class Cache:
         self.data = self._load_cache()
 
         self.request_count = self.get("request count", 0)
+        self.cached_playlist = self.get("cached playlist", [])
 
     def _load_cache(self) -> dict:
         """Load cache data from file."""
@@ -99,3 +100,11 @@ class Cache:
         """
         self.request_count += 1
         self.set("request count", self.request_count)
+
+    def update_playlist(self, playlist: List) -> None:
+
+        self.cached_playlist = playlist
+        self.set("cached playlist", self.cached_playlist)
+
+    def get_cached_playlist(self) -> List:
+        return self.cached_playlist

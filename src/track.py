@@ -19,17 +19,10 @@ class Track:
 
         # Initialize empty variables
         self.name = ""
-        self.key = ""
-        self.mode = ""
-        self.camelot = ""
-        self.loudness = ""
         self.tempo = None
         self.energy = None
         self.danceability = None
         self.valence = None
-        self.acousticness = None
-        self.liveness = None
-        self.speechiness = None
 
         self.load_track()
 
@@ -90,3 +83,18 @@ class Track:
             self.danceability,
             self.valence,
         ]
+    
+    def get_data(self):
+        """
+        Get the track data as a dictionary for caching.
+
+        Returns:
+            dict: Dictionary containing track data with specified keys
+        """
+        return {
+            "name": self.name,
+            "tempo": self.tempo,
+            "energy": self.energy,
+            "danceability": self.danceability,
+            "happiness": self.valence,
+        }
