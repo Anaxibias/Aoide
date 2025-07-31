@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Figure superclass for the Aoide Python application.
+Figure superclass for the Audio Visualizer Python application.
 Provides base functionality for data visualization and plotting.
 """
 
@@ -11,13 +11,13 @@ import plotly.express as px
 
 class Figure(ABC):
     """
-    Abstract base class for creating data visualizations in Aoide.
+    Abstract base class for creating data visualizations in Audio Visualizer.
     
     This superclass provides common functionality for all figure types
     and defines the interface that subclasses must implement.
     """
 
-    def __init__(self, title: str = "Aoide Visualization", width: int = 800, height: int = 600, vectors: list = None, names: list = None):
+    def __init__(self, title: str = "Audio Visualizer Visualization", width: int = 800, height: int = 600, vectors: list = None, names: list = None):
         """
         Initialize the Figure with basic configuration.
         

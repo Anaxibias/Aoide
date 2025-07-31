@@ -37,7 +37,7 @@ class TestCLI:
         self.cli.run()
         
         output = mock_stdout.getvalue()
-        assert "Welcome to Aoide Audio Analysis Tool!" in output
+        assert "Welcome to Audio Visualizer Audio Analysis Tool!" in output
         assert "Goodbye!" in output
 
     @patch('builtins.input', side_effect=['--help', '--exit'])
@@ -119,4 +119,4 @@ class TestCLI:
             
             assert result is False
             output = mock_stdout.getvalue()
-            assert "Thank you for using Aoide!" in output
+            assert "Thank you for using Audio Visualizer!" in output

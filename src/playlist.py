@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Playlist object for the Aoide Python application.
+Playlist object for the Audio Visualizer Python application.
 """
 from src.spotify_api_client import SpotifyAPIClient
 from src.trackanalysis_api_client import TrackAnalysisApiClient

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Main application entry point for the Aoide Python application.
+Main application entry point for the Audio Visualizer Python application.
 """
 
 import os
@@ -84,14 +84,14 @@ def get_auth_headers():
 
     return {
         "Authorization": f"Bearer {access_token}",
-        "User-Agent": "Aoide-Python-App/1.0",
+        "User-Agent": "Audio-Visualizer-Python-App/1.0",
         "Accept": "application/json"
     }
 
 def main():
     """Main function to run the application."""
-    print("Welcome to Aoide - Spotify API Client!")
-    print("========================================\n")
+    print("Welcome to Audio Visualizer - Spotify API Client!")
+    print("================================================\n")
 
     # Basic functionality test
     if check_credentials():

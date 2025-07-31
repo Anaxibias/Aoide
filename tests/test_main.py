@@ -1,5 +1,5 @@
 """
-Tests for the Aoide application.
+Tests for the Audio Visualizer application.
 """
 import pytest
 import sys

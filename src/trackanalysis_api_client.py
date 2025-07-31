@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Track Analysis API Client for the Aoide Python application.
+Track Analysis API Client for the Audio Visualizer Python application.
 Handles API requests and authentication for RapidAPI Track Analysis service.
 """
 

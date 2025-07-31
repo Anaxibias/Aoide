@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Radar plot implementation for the Aoide Python application.
+Radar plot implementation for the Audio Visualizer Python application.
 Subclass of Figure for creating radar/spider charts.
 """
 

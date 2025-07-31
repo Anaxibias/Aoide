@@ -1,4 +1,4 @@
-# Python dependencies for Aoide - Spotify API Client
+# Python dependencies for Audio Visualizer - Spotify API Client
 # Add your project dependencies here
 
 # Core dependencies

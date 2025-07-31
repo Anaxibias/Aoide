@@ -62,7 +62,7 @@ venv.bak/
 # Cache files (but keep the cache directory)
 cache/*.json
 cache/*.cache
-aoide_cache.json
+audiovisualizer_cache.json
 
 # IDE
 .vscode/

@@ -1,6 +1,6 @@
-# Aoide - Spotify API Client
+# Audio Visualizer - Spotify API Client
 
-A Python application for interacting with the Spotify Web API and Track Analysis API via RapidAPI (https://rapidapi.com/soundnet-soundnet-default/api/track-analysis). Aoide provides a command-line interface for importing playlists and analyzing tracks.
+A Python application for interacting with the Spotify Web API and Track Analysis API via RapidAPI (https://rapidapi.com/soundnet-soundnet-default/api/track-analysis). Audio Visualizer provides a command-line interface for importing playlists and analyzing tracks.
 
 ## Setup
 
@@ -53,10 +53,10 @@ python main.py                           # Run interactive CLI mode
 
 ### Example Usage:
 ```bash
-aoide> --import 1FRNBuJwMjofqnXkFhijQA    # Import playlist by ID
-aoide> --import https://open.spotify.com/track/1FRNBuJwMjofqnXkFhijQA?si=e38e344f392b4b23  # Import by share link
-aoide> --print                           # Show track names
-aoide> --vector                          # Show audio analysis vectors
-aoide> --help                            # Get help
-aoide> --exit                            # Exit application
+audio-visualizer> --import 1FRNBuJwMjofqnXkFhijQA    # Import playlist by ID
+audio-visualizer> --import https://open.spotify.com/track/1FRNBuJwMjofqnXkFhijQA?si=e38e344f392b4b23  # Import by share link
+audio-visualizer> --print                           # Show track names
+audio-visualizer> --vector                          # Show audio analysis vectors
+audio-visualizer> --help                            # Get help
+audio-visualizer> --exit                            # Exit application
 ```

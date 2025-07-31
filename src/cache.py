@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Cache module for the Aoide Python application.
+Cache module for the Audio Visualizer Python application.
 Provides persistent data storage between sessions.
 """
 
@@ -11,7 +11,7 @@ from typing import Any, List
 class Cache:
     """Simple file-based cache for storing data between sessions."""
 
-    def __init__(self, cache_file: str = "cache/aoide_cache.json"):
+    def __init__(self, cache_file: str = "cache/audiovisualizer_cache.json"):
         """
         Initialize the cache with a specified file path.
         

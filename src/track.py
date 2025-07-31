@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Track object for the Aoide Python application.
+Track object for the Audio Visualizer Python application.
 """
 
 class Track:

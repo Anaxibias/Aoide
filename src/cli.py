@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-CLI module for the Aoide Python application.
+CLI module for the Audio Visualizer Python application.
 Provides command-line interface functionality.
 """
 
@@ -39,7 +39,7 @@ class CLI:
 
     def display_prompt(self) -> None:
         """Display the command prompt."""
-        print("aoide> ", end="")
+        print("audio-visualizer> ", end="")
 
     def parse_command(self, user_input: str) -> tuple[str, List[str]]:
         """Parse user input into command and arguments."""
@@ -63,7 +63,7 @@ class CLI:
 
     def run(self) -> None:
         """Run the main CLI loop."""
-        print("Welcome to Aoide Audio Analysis Tool!")
+        print("Welcome to Audio Visualizer Audio Analysis Tool!")
         print("Type --help for available commands or --exit to quit.")
         print()
 
@@ -90,7 +90,7 @@ class CLI:
 
     def show_help(self, args: List[str]) -> bool:
         """Display help information."""
-        print("\n❓ AOIDE - HELP & INFORMATION")
+        print("\n❓ AUDIO VISUALIZER - HELP & INFORMATION")
         print("=" * 40)
         print()
         print("Available Commands:")
@@ -250,7 +250,7 @@ class CLI:
 
     def exit_app(self, args: List[str]) -> bool:
         """Exit the application."""
-        print("\nThank you for using Aoide!")
+        print("\nThank you for using Audio Visualizer!")
         return False
 
 def main():

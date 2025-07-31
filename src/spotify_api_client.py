@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-API Client for the Aoide Python application.
+API Client for the Audio Visualizer Python application.
 Handles API requests and authentication for Spotify API.
 """
 
