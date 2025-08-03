@@ -61,7 +61,7 @@ class RadarPlot(Figure):
             polar=dict(
                 radialaxis=dict(
                     visible=True,
-                    range=[0, 130]  # Adjusted range for the data values
+                    range=[0, 200]  # Adjusted range for the data values
                 )
             ),
             showlegend=True,
